@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box
+        }
+
+        ul,
+        li {
+            list-style: none;
+        }
+
+        .clock-box {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            top: 50%;
+            left: 50%;
+            margin-top: -100px;
+            margin-left: -100px;
+        }
+
+        .clock-box:after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -5px;
+            margin-left: -5px;
+            background: rebeccapurple;
+            border-radius: 5px;
+        }
+
+        .clock-box .tick-box {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border: 2px solid black;
+            border-radius: 50%;
+        }
+
+        .clock-box .tick-box li {
+            position: absolute;
+            height: 2px;
+            width: 5px;
+            top: 97px;
+            left: -2px;
+            background-color: #000;
+            transform-origin: 100px center;
+        }
+
+        .clock-box .tick-box li:nth-child(5n+1) {
+            width: 10px;
+        }
+
+        .item {
+            position: absolute;
+            background-color: red;
+            transform-origin: center bottom;
+        }
+
+        .seconds-hand  {
+            height: 89px;
+            width: 1px;
+            top: 11px;
+            left: 99px;
+            transform: rotate(0deg)
+        }
+
+        .minutes-hand {
+            height: 76px;
+            width: 2px;
+            top: 24px;
+            left: 98px;
+            transform: rotate(60deg);
+            background: green;
+        }
+
+        .hours-hand {
+            height: 60px;
+            width: 4px;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+            top: 40px;
+            left: 96px;
+            transform: rotate(72deg);
+            background: blue
+        }
+    </style>
+</head>
+
+<body>
+    <div class="clock-box">
+        <ul class="tick-box">
+        </ul>
+        <div class="hours-hand item"></div>
+        <div class="minutes-hand item"></div>
+        <div class="seconds-hand item"></div>
+    </div>
+</body>
+<script>
+    const frag = document.createDocumentFragment();
+    const tickBox = document.querySelector('.tick-box')
+    const hour = document.querySelector('.hours-hand')
+    const minute = document.querySelector('.minutes-hand')
+    const second = document.querySelector('.seconds-hand')
+    for (let i = 0; i < 60; i++) {
+        let li = document.createElement('li');
+        li.style.transform = `rotate(${i * 360 / 60}deg)`;
+        frag.appendChild(li)
+    }
+    tickBox.appendChild(frag)
+
+    function time() {
+       const now = new Date();
+       const h = now.getHours();
+       const m = now.getMinutes();
+       const s = now.getSeconds();
+       hour.style.transform = `rotate(${(h+m/60)*30}deg)`
+       minute.style.transform = `rotate(${(m+s/60)*6}deg)`
+       second.style.transform = `rotate(${s*6}deg)`
+    }
+    time()
+    setInterval(time, 1000)
+</script>
+
+</html>

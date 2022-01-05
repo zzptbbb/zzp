@@ -57,11 +57,21 @@ export default {
   data() {
     return {
       msg: "Home",
-      value1: new Date(2016, 9, 10, 18, 40),
+      value1: new Date(2015, 9, 10, 18, 40),
       value2: new Date(2016, 9, 10, 18, 40),
     };
   },
-
+  created() {
+    for (let i = 0; i < 1000; i++) {
+      // console.log(i);
+      
+      setTimeout(() => {
+      var div = document.createElement("div");
+      div.innerText = i;
+      document.body.appendChild(div);
+      }, 3000);
+    }
+  },
   methods: {
     // 如允许 17:30:00 - 18:30:00
     disabledHours() {
