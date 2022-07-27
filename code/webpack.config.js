@@ -1,4 +1,6 @@
 const path = require("path");
+const ESLintPlugin = require('eslint-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
     //入口 
     entry: "./src/main.js",
@@ -54,12 +56,25 @@ module.exports = {
                     filename: 'static/media/[hash:10][ext][query]'
                   }
             },
+            {
+                test: /\.m?js$/,
+                exclude: /(node_modules)/,//排除node_modules里面的 js文件（这些文件不处理）
+                  loader: 'babel-loader',
+                //   options: {
+                //     presets: ['@babel/preset-env']
+                //   }
+              }
         ],
     },
 
     // 插件
-    plugins: [
+    plugins: [new ESLintPlugin({
         // plugin的配置
+
+        //检查哪些文件
+        context:path.resolve(__dirname,"src")
+    }),new HtmlWebpackPlugin()
+        
     ],
     // 模式
     mode: 'development'
